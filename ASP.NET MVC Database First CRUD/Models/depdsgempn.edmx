@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="depdesempModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbdep">
+          <Key>
+            <PropertyRef Name="dno" />
+          </Key>
+          <Property Name="dno" Type="int" Nullable="false" />
+          <Property Name="dnam" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tbdsg">
+          <Key>
+            <PropertyRef Name="dsgcod" />
+          </Key>
+          <Property Name="dsgcod" Type="int" Nullable="false" />
+          <Property Name="dsgnam" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tbemployee">
+          <Key>
+            <PropertyRef Name="empno" />
+          </Key>
+          <Property Name="empno" Type="int" Nullable="false" />
+          <Property Name="ename" Type="varchar" MaxLength="50" />
+          <Property Name="eadd" Type="varchar" MaxLength="50" />
+          <Property Name="esal" Type="int" />
+          <Property Name="edno" Type="int" />
+          <Property Name="edsgcod" Type="int" />
+        </EntityType>
+        <Association Name="FK_tbemployee_ToTable_tbdep">
+          <End Role="tbdep" Type="Self.tbdep" Multiplicity="0..1" />
+          <End Role="tbemployee" Type="Self.tbemployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbdep">
+              <PropertyRef Name="dno" />
+            </Principal>
+            <Dependent Role="tbemployee">
+              <PropertyRef Name="edno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbemployee_ToTable_tbdsg">
+          <End Role="tbdsg" Type="Self.tbdsg" Multiplicity="0..1" />
+          <End Role="tbemployee" Type="Self.tbemployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbdsg">
+              <PropertyRef Name="dsgcod" />
+            </Principal>
+            <Dependent Role="tbemployee">
+              <PropertyRef Name="edsgcod" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="depdesempModelStoreContainer">
+          <EntitySet Name="tbdep" EntityType="Self.tbdep" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbdsg" EntityType="Self.tbdsg" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbemployee" EntityType="Self.tbemployee" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tbemployee_ToTable_tbdep" Association="Self.FK_tbemployee_ToTable_tbdep">
+            <End Role="tbdep" EntitySet="tbdep" />
+            <End Role="tbemployee" EntitySet="tbemployee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbemployee_ToTable_tbdsg" Association="Self.FK_tbemployee_ToTable_tbdsg">
+            <End Role="tbdsg" EntitySet="tbdsg" />
+            <End Role="tbemployee" EntitySet="tbemployee" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="depdesempModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tbdep">
+          <Key>
+            <PropertyRef Name="dno" />
+          </Key>
+          <Property Name="dno" Type="Int32" Nullable="false" />
+          <Property Name="dnam" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbemployees" Relationship="Self.FK_tbemployee_ToTable_tbdep" FromRole="tbdep" ToRole="tbemployee" />
+        </EntityType>
+        <EntityType Name="tbdsg">
+          <Key>
+            <PropertyRef Name="dsgcod" />
+          </Key>
+          <Property Name="dsgcod" Type="Int32" Nullable="false" />
+          <Property Name="dsgnam" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbemployees" Relationship="Self.FK_tbemployee_ToTable_tbdsg" FromRole="tbdsg" ToRole="tbemployee" />
+        </EntityType>
+        <EntityType Name="tbemployee">
+          <Key>
+            <PropertyRef Name="empno" />
+          </Key>
+          <Property Name="empno" Type="Int32" Nullable="false" />
+          <Property Name="ename" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="eadd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="esal" Type="Int32" />
+          <Property Name="edno" Type="Int32" />
+          <Property Name="edsgcod" Type="Int32" />
+          <NavigationProperty Name="tbdep" Relationship="Self.FK_tbemployee_ToTable_tbdep" FromRole="tbemployee" ToRole="tbdep" />
+          <NavigationProperty Name="tbdsg" Relationship="Self.FK_tbemployee_ToTable_tbdsg" FromRole="tbemployee" ToRole="tbdsg" />
+        </EntityType>
+        <Association Name="FK_tbemployee_ToTable_tbdep">
+          <End Role="tbdep" Type="Self.tbdep" Multiplicity="0..1" />
+          <End Role="tbemployee" Type="Self.tbemployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbdep">
+              <PropertyRef Name="dno" />
+            </Principal>
+            <Dependent Role="tbemployee">
+              <PropertyRef Name="edno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbemployee_ToTable_tbdsg">
+          <End Role="tbdsg" Type="Self.tbdsg" Multiplicity="0..1" />
+          <End Role="tbemployee" Type="Self.tbemployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbdsg">
+              <PropertyRef Name="dsgcod" />
+            </Principal>
+            <Dependent Role="tbemployee">
+              <PropertyRef Name="edsgcod" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="depdesempEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbdeps" EntityType="Self.tbdep" />
+          <EntitySet Name="tbdsgs" EntityType="Self.tbdsg" />
+          <EntitySet Name="tbemployees" EntityType="Self.tbemployee" />
+          <AssociationSet Name="FK_tbemployee_ToTable_tbdep" Association="Self.FK_tbemployee_ToTable_tbdep">
+            <End Role="tbdep" EntitySet="tbdeps" />
+            <End Role="tbemployee" EntitySet="tbemployees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbemployee_ToTable_tbdsg" Association="Self.FK_tbemployee_ToTable_tbdsg">
+            <End Role="tbdsg" EntitySet="tbdsgs" />
+            <End Role="tbemployee" EntitySet="tbemployees" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="depdesempModelStoreContainer" CdmEntityContainer="depdesempEntities">
+          <EntitySetMapping Name="tbdeps">
+            <EntityTypeMapping TypeName="depdesempModel.tbdep">
+              <MappingFragment StoreEntitySet="tbdep">
+                <ScalarProperty Name="dno" ColumnName="dno" />
+                <ScalarProperty Name="dnam" ColumnName="dnam" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbdsgs">
+            <EntityTypeMapping TypeName="depdesempModel.tbdsg">
+              <MappingFragment StoreEntitySet="tbdsg">
+                <ScalarProperty Name="dsgcod" ColumnName="dsgcod" />
+                <ScalarProperty Name="dsgnam" ColumnName="dsgnam" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbemployees">
+            <EntityTypeMapping TypeName="depdesempModel.tbemployee">
+              <MappingFragment StoreEntitySet="tbemployee">
+                <ScalarProperty Name="empno" ColumnName="empno" />
+                <ScalarProperty Name="ename" ColumnName="ename" />
+                <ScalarProperty Name="eadd" ColumnName="eadd" />
+                <ScalarProperty Name="esal" ColumnName="esal" />
+                <ScalarProperty Name="edno" ColumnName="edno" />
+                <ScalarProperty Name="edsgcod" ColumnName="edsgcod" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
